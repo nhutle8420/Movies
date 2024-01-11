@@ -59,15 +59,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   }
               ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 32),
             Text(
               'Movies',
               style: GoogleFonts.aBeeZee(fontSize: 25),
             ),
+            const SizedBox(height: 15),
             SizedBox(
               child: FutureBuilder(
                   future: listMovies,
-                  builder: (context, snapshot){
+                    builder: (context, snapshot){
                     if(snapshot.hasError) {
                       return Center(
                         child: Text(snapshot.error.toString()),

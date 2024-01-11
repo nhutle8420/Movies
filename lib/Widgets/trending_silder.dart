@@ -1,7 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-
-import 'package:movie_app/KeyApiURL.dart';
+import 'package:get/get.dart';
+import 'package:movie_app/Api/KeyApiURL.dart';
+import 'package:movie_app/Widgets/detail_slider.dart';
 
 class TrendingSlider extends StatelessWidget {
   const TrendingSlider({
@@ -13,62 +14,49 @@ class TrendingSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-      return Container(
-        child: Column(
-          children: [
-            CarouselSlider.builder(
-                itemCount: 10,
-                itemBuilder: (context,itemIndex,pageViewIndex){
-                  return ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: SizedBox(
-                      child: Image.network(
-                        filterQuality: FilterQuality.high,
-                        fit: BoxFit.cover,
-                          '${KeyApi.imagePath}${snapshot.data[itemIndex].poster_path}'
-                      ),
-
-                      height: 300,
-                      width: 200,
-                    ),
-                  );
-                },
-                options: CarouselOptions(
-                  height: 200,
-                  autoPlay: true,
-                  viewportFraction: 0.9,
-                  autoPlayCurve: Curves.fastLinearToSlowEaseIn,
-                  autoPlayAnimationDuration: const Duration(seconds: 1),
-                  enlargeCenterPage: true,
-                )
-            ),
-            CarouselSlider.builder(
-                itemCount: 10,
-                itemBuilder: (context,itemIndex,pageViewIndex){
-                  return ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: SizedBox(
-                      child:Text(
-                          '${snapshot.data[itemIndex].title}'
-
-                      ),
-
-                    ),
-                  );
-                },
-                options: CarouselOptions(
-                  height: 20,
-                  autoPlay: true,
-                  viewportFraction: 0.6,
-                  autoPlayCurve: Curves.fastLinearToSlowEaseIn,
-                  autoPlayAnimationDuration: const Duration(milliseconds: 1500),
-                  enlargeCenterPage: true,
-                )
-            ),
-
-          ],
+    return SizedBox(
+      width: double.infinity,
+      child: CarouselSlider.builder(
+        itemCount: snapshot.data!.length,
+        options: CarouselOptions(
+          height: 300,
+          autoPlay: true,
+          viewportFraction: 0.55,
+          enlargeCenterPage: true,
+          pageSnapping: true,
+          autoPlayCurve: Curves.fastOutSlowIn,
+          autoPlayAnimationDuration: const Duration(seconds: 1),
         ),
-      );
-    }
+        itemBuilder: (context, itemIndex, pageViewIndex) {
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DetailsScreen(
+                    movie: snapshot.data[itemIndex],
+                  ),
+                ),
+              );
+            },
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: SizedBox(
+                height: 300,
+                width: 200,
+                child: Image.network(
+                  filterQuality: FilterQuality.high,
+                  fit: BoxFit.cover,
+                  '${KeyApi.imagePath}${snapshot.data[itemIndex].poster_path}',
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
 }
+
+
 

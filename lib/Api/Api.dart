@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import '../KeyApiURL.dart';
+import 'KeyApiURL.dart';
 import '../Models/movie.dart';
 import 'package:http/http.dart' as http;
 class Apii{

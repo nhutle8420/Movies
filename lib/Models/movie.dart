@@ -5,7 +5,7 @@ class Movie {
   String overview;
   String poster_path;
   String release_date;
-  String vote_average;
+  double vote_average;
   String backdrop_path;
 
   Movie({
@@ -27,7 +27,7 @@ class Movie {
         release_date: json['release_date'],
 
         backdrop_path: json['backdrop_path'],
-        vote_average: json["vote_average"].toString(),
+        vote_average: json["vote_average"].toDouble(),
     );
   }
 

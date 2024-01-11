@@ -2,7 +2,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
-import 'package:movie_app/KeyApiURL.dart';
+import 'package:movie_app/Api/KeyApiURL.dart';
+
+import 'detail_slider.dart';
 
 class MoviesSilder extends StatelessWidget {
   const MoviesSilder({
@@ -17,19 +19,32 @@ class MoviesSilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
+      height: 200,
       width: double.infinity,
-      child: CarouselSlider.builder(
-        itemCount: 20, //chưa lấy được độ dài snapshort
-        options: CarouselOptions(
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        physics: const BouncingScrollPhysics(),
+        itemCount: snapshot.data!.length,
+        //chưa lấy được độ dài snapshort
+       /* options: CarouselOptions(4
           height: 250,
           viewportFraction: 0.6,
           autoPlayCurve: Curves.fastLinearToSlowEaseIn,
 
           enlargeCenterPage: true,
-        ),
-        itemBuilder: (context,itemIndex,pageViewIndex){
-          return ClipRRect(
-            borderRadius: BorderRadius.circular(12),
+        ),*/
+        itemBuilder: (context,itemIndex){
+          return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DetailsScreen(
+                      movie: snapshot.data[itemIndex],
+                    ),
+                  ),
+                );
+              },
             child: Column(
               children: [
                   SizedBox(
@@ -39,8 +54,9 @@ class MoviesSilder extends StatelessWidget {
                         '${KeyApi.imagePath}${snapshot.data[itemIndex].poster_path}'
                     ),
                     height: 150,
-                    width: 150,
+                    width: 100,
                   ),
+                const SizedBox(height: 10),
                 SizedBox(
                   child: Text(
                       '${snapshot.data[itemIndex].title}'
