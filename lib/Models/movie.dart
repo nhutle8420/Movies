@@ -1,5 +1,6 @@
 
 class Movie {
+  int id;
   String title;
   String original_title;
   String overview;
@@ -7,8 +8,11 @@ class Movie {
   String release_date;
   double vote_average;
   String backdrop_path;
+  double vote_count;
+  double popularity;
 
   Movie({
+    required this.id,
     required this.title,
     required this.original_title,
     required this.overview,
@@ -16,18 +20,22 @@ class Movie {
     required this.release_date,
     required this.vote_average,
     required this.backdrop_path,
+    required this.vote_count,
+    required this.popularity,
   });
 
   factory Movie.fromJson(Map<String, dynamic> json){
     return Movie(
-        title: json['title'],
+        id: json['id'] as int,
+        title: json['title'] ,
         original_title: json['original_title'],
         overview: json['overview'],
         poster_path: json['poster_path'],
         release_date: json['release_date'],
-
         backdrop_path: json['backdrop_path'],
         vote_average: json["vote_average"].toDouble(),
+        vote_count : json["vote_count"].toDouble(),
+        popularity: json["popularity"].toDouble(),
     );
   }
 

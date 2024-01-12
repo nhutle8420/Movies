@@ -18,7 +18,7 @@ class DetailsScreen extends StatelessWidget {
         slivers: [
           SliverAppBar.large(
             leading: const BackButton(),
-            backgroundColor: Colours.scaffoldBgColor,
+            backgroundColor: Mycolor.scaffoldBgColor,
             expandedHeight: 500,
             pinned: true,
             floating: true,
@@ -95,7 +95,6 @@ class DetailsScreen extends StatelessWidget {
 
                           child: Row(
                             children: [
-
                              Text(
                                 'Rating: ',
                                 style: GoogleFonts.roboto(
@@ -103,7 +102,6 @@ class DetailsScreen extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-
                               Text(
                                 '${movie.vote_average.toStringAsFixed(1)}/10',
                                 style: GoogleFonts.roboto(
@@ -116,6 +114,69 @@ class DetailsScreen extends StatelessWidget {
                               ),
                             ],
                           ),
+
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    child:  Text("  "),
+                  ),
+                  SizedBox(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Row(
+                            children: [
+                              Text(
+                                'Number Vote: ',
+                                style: GoogleFonts.roboto(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                '${movie.vote_count.toStringAsFixed(0)}',
+                                style: GoogleFonts.roboto(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Text("  "),
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+
+                          child: Row(
+                            children: [
+                              Text(
+                                'popularity: ',
+                                style: GoogleFonts.roboto(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                '${movie.popularity.toStringAsFixed(0)}',
+                                style: GoogleFonts.roboto(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+
                         )
                       ],
                     ),

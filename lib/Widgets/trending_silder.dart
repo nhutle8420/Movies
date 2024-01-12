@@ -14,19 +14,13 @@ class TrendingSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: CarouselSlider.builder(
+    return  CarouselSlider.builder(
         itemCount: snapshot.data!.length,
         options: CarouselOptions(
-          height: 300,
-          autoPlay: true,
-          viewportFraction: 0.55,
-          enlargeCenterPage: true,
-          pageSnapping: true,
-          autoPlayCurve: Curves.fastOutSlowIn,
-          autoPlayAnimationDuration: const Duration(seconds: 1),
-        ),
+            viewportFraction: 1,
+            autoPlay: true,
+            autoPlayInterval: Duration(seconds: 2),
+            height: MediaQuery.of(context).size.height),
         itemBuilder: (context, itemIndex, pageViewIndex) {
           return GestureDetector(
             onTap: () {
@@ -39,24 +33,23 @@ class TrendingSlider extends StatelessWidget {
                 ),
               );
             },
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: SizedBox(
-                height: 300,
-                width: 200,
-                child: Image.network(
-                  filterQuality: FilterQuality.high,
-                  fit: BoxFit.cover,
-                  '${KeyApi.imagePath}${snapshot.data[itemIndex].poster_path}',
-                ),
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+              colorFilter: ColorFilter.mode(
+                   Colors.black.withOpacity(0.3),
+                  BlendMode.darken),
+                  image: NetworkImage(
+                      '${KeyApi.imagePath}${snapshot
+                          .data[itemIndex].poster_path}'
+                  ),
+                    fit:BoxFit.fill),
+                )
               ),
-            ),
-          );
+
+            );
         },
-      ),
-    );
+      );
   }
 }
-
-
-
