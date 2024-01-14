@@ -28,7 +28,7 @@ class MoviesSilder extends StatelessWidget {
               child: Text('List Movies',style: TextStyle(color: Mycolor.redd),),),
           Container(
               height: 250,
-              child: ListView.builder(
+              child:ListView.builder(
                   scrollDirection: Axis.horizontal,
                   physics: const BouncingScrollPhysics(),
                   itemCount: snapshot.data!.length,
@@ -96,7 +96,9 @@ class MoviesSilder extends StatelessWidget {
                             ],
                           ),
                         ));
-                  })),
+                  }
+                  )
+          ),
         ]);
   }
 }

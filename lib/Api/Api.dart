@@ -1,5 +1,6 @@
 import 'dart:convert';
-
+import 'package:movie_app/Database/DatabaseHelper.dart';
+import 'package:sqflite/sqflite.dart';
 import 'KeyApiURL.dart';
 import '../Models/movie.dart';
 import 'package:http/http.dart' as http;
@@ -32,14 +33,33 @@ class Apii{
     }
 
 
-  Future<List<Movie>> getSearch() async {
-    final res = await http.get(Uri.parse(_moviesingUrl));
-    if (res.statusCode == 200) {
-      final data = json.decode(res.body)['results'] as List;
+      Future<List<Movie>> getSearch() async {
+        final res = await http.get(Uri.parse(_moviesingUrl));
+        if (res.statusCode == 200) {
+          final data = json.decode(res.body)['results'] as List;
 
-      return data.map((movie) => Movie.fromJson(movie)).toList();
+          return data.map((movie) => Movie.fromJson(movie)).toList();
+        } else {
+          throw Exception('ERRO: ------');
+        }
+      }
+
+  Future<List<Movie>> fetchMovies() async {
+    final response = await http.get(Uri.parse(_moviesingUrl));
+
+    if (response.statusCode == 200) {
+      List<dynamic> data = json.decode(response.body)['results'];
+      List<Movie> movies = data.map((json) => Movie.fromJson(json)).toList();
+
+      // Save data to SQLite
+      DatabaseHelper dbHelper = DatabaseHelper();
+      for (var movie in movies) {
+        await dbHelper.insertMovie(movie);
+      }
+
+      return movies;
     } else {
-      throw Exception('ERRO: ------');
+      throw Exception('Failed to load movies');
     }
   }
   }

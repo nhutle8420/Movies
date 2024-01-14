@@ -39,5 +39,20 @@ class Movie {
     );
   }
 
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'title': title,
+      'overview': overview,
+      'original_title' :original_title.length,
+      'poster_path' : poster_path,
+      'release_date' :release_date,
+      'backdrop_path' : backdrop_path,
+      'vote_average' : vote_average,
+      'vote_count' : vote_count,
+      'popularity' : popularity,
+    };
+  }
+
 }
 
