@@ -41,7 +41,6 @@ class Movie {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
       'title': title,
       'overview': overview,
       'original_title' :original_title.length,

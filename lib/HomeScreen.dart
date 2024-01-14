@@ -1,12 +1,12 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_app/Api/Api.dart';
 import 'package:movie_app/Api/KeyApiURL.dart';
 import 'package:movie_app/Color.dart';
-import 'package:movie_app/Database/DatabaseHelper.dart';
 import 'package:movie_app/Models/movie.dart';
-import 'package:movie_app/Widgets/movies_silder.dart';
+import 'package:movie_app/Widgets/detail_slider.dart';
 import 'package:movie_app/Widgets/search.dart';
-import 'package:movie_app/Widgets/trending_silder.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
   void initState() {
     super.initState();
     trendingMovies = Apii().gettrending();
-    listMovies = Apii().getMovies();
+    listMovies = Apii().fetchMovies();
   }
 
   @override
@@ -48,16 +48,59 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
             flexibleSpace: FlexibleSpaceBar(
               collapseMode: CollapseMode.parallax,
               background: FutureBuilder(
-                future: trendingMovies, builder: (context, snapshot){
-                    if(snapshot.hasError) {
-                      return Center(
-                        child: Text(snapshot.error.toString()),
+                future: trendingMovies,
+                  builder: (context, snapshot){
+                    if(snapshot.connectionState == ConnectionState.waiting){
+                      return CircularProgressIndicator();
+                    }else if(snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    }else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return ElevatedButton(
+                        onPressed: () async {
+                          await Apii().gettrending();
+                          // Refresh the UI after data is saved
+                        },
+                        child: Text('Fetch and Save Movies'),
                       );
-                    }else if (snapshot.hasData){
+                    }else{
+                      List<Movie> movies = snapshot.data!;
 
-                      return  TrendingSlider(snapshot: snapshot,);
-                    }else {
-                      return const Center(child: CircularProgressIndicator());
+                      return  CarouselSlider.builder(
+                        itemCount: snapshot.data!.length,
+                        options: CarouselOptions(
+                            viewportFraction: 1,
+                            autoPlay: true,
+                            autoPlayInterval: Duration(seconds: 2),
+                            height: MediaQuery.of(context).size.height),
+                        itemBuilder: (context, itemIndex, pageViewIndex) {
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DetailsScreen(
+                                    movie: movies[itemIndex],
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      colorFilter: ColorFilter.mode(
+                                          Colors.black.withOpacity(0.3),
+                                          BlendMode.darken),
+                                      image: NetworkImage(
+                                          '${KeyApi.imagePath}${movies[itemIndex].poster_path}'
+                                      ),
+                                      fit:BoxFit.fill),
+                                )
+                            ),
+
+                          );
+                        },
+                      );
                     }
                   }
               ),
@@ -118,6 +161,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                             itemBuilder: (context, index) {
                                               return GestureDetector(
                                                   onTap: () {
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) => DetailsScreen(
+                                                          movie: movies[index],
+                                                        ),
+                                                      ),
+                                                    );
                                                   },
                                                   child: Container(
                                                     decoration: BoxDecoration(
