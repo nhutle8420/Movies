@@ -66,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                       List<Movie> movies = snapshot.data!;
 
                       return  CarouselSlider.builder(
-                        itemCount: snapshot.data!.length,
+                        itemCount: movies.length,
                         options: CarouselOptions(
                             viewportFraction: 1,
                             autoPlay: true,
@@ -157,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                         child:ListView.builder(
                                             scrollDirection: Axis.horizontal,
                                             physics: const BouncingScrollPhysics(),
-                                            itemCount: snapshot.data!.length,
+                                            itemCount: movies.length,
                                             itemBuilder: (context, index) {
                                               return GestureDetector(
                                                   onTap: () {
