@@ -10,7 +10,8 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.2
   get:
-
+  # add this line to your dependencies
+  fluttertoast: ^8.2.4
   carousel_slider: ^4.1.1
 dev_dependencies:
   flutter_test:

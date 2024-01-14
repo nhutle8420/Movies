@@ -7,4 +7,6 @@ class Mycolor {
   static const blu = Color(0xFF1153E0);
   static const yew = Color(0xFFFFF601);
   static const redd = Color(0xFFFF0101);
+
+  static const green = Color(0xFF0AFC32);
 }

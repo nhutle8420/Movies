@@ -64,7 +64,9 @@ class MoviesSilder extends StatelessWidget {
                             children: [
                                 Padding(
                                   padding: const EdgeInsets.only(top: 5 ,left: 6,),
-                                  child: Text('${snapshot.data[itemIndex].release_date}'),
+                                  child: Text('${snapshot.data[itemIndex].release_date}',style:TextStyle (
+                                      color: Mycolor.green
+                                  ),),
                                 ),
                               Padding (
                                 padding: const EdgeInsets.only(top: 2 ,right: 6),
