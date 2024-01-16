@@ -5,8 +5,6 @@ import 'package:movie_app/Api/KeyApiURL.dart';
 import 'package:movie_app/Color.dart';
 import 'package:movie_app/Models/movie.dart';
 import 'package:movie_app/Widgets/detail_slider.dart';
-import 'package:movie_app/Widgets/search.dart';
-
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -17,7 +15,7 @@ class HomeScreen extends StatefulWidget {
 
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
-
+  int _currentIndex = 1;
  late Future<List<Movie>> trendingMovies;
  late Future<List<Movie>> listMovies;
 
@@ -32,12 +30,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
   Widget build(BuildContext context) {
     TabController _tabController = TabController(length: 1, vsync: this);
     return Scaffold(
-        appBar: AppBar(
-              backgroundColor: Mycolor.blu,
-              elevation: 0,
-              title: Text('MOVIE APP'),
-              centerTitle: true,
-            ),
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
@@ -121,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
           SliverList(
             delegate: SliverChildListDelegate(
               [
-              searchfunc(),
+
                 Container(
                   height: 700,
                   width: MediaQuery.of(context).size.width,

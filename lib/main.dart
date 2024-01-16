@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/Color.dart';
-import 'package:movie_app/HomeScreen.dart';
+import 'package:movie_app/Home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Mycolor.scaffoldBgColor,
         useMaterial3: true,
       ),
-      home: const HomeScreen(),
+      home: const Home(),
     );
   }
 }
