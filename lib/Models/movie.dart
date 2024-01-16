@@ -39,7 +39,7 @@ class Movie {
     );
   }
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> ToMap() {
     return {
       'title': title,
       'overview': overview,

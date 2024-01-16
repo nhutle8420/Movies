@@ -6,16 +6,16 @@ import 'package:movie_app/Api/KeyApiURL.dart';
 
 import 'dart:convert';
 
-import 'package:movie_app/Widgets/check.dart';
+import 'package:movie_app/Widgets/description_Checkui.dart';
 
-class searchfunc extends StatefulWidget {
-  const searchfunc({super.key});
+class Searchfunc extends StatefulWidget {
+  const Searchfunc({super.key});
 
   @override
-  State<searchfunc> createState() => _searchbarfunState();
+  State<Searchfunc> createState() => _searchbarfunState();
 }
 
-class _searchbarfunState extends State<searchfunc> {
+class _searchbarfunState extends State<Searchfunc> {
   ////////////////////////////////search bar function/////////////////////////////////////////////
   List<Map<String, dynamic>> searchresult = [];
 
@@ -43,7 +43,8 @@ class _searchbarfunState extends State<searchfunc> {
 
           // searchresult = searchresult.toSet().toList();
 
-          if (searchresult.length > 20) {
+          if (searchresult.length > 30) {
+
             searchresult.removeRange(20, searchresult.length);
           }
         } else {
@@ -114,13 +115,13 @@ class _searchbarfunState extends State<searchfunc> {
                           });
                         },
                         icon: Icon(
-                          Icons.arrow_back_ios_rounded,
-                          color: Colors.amber.withOpacity(0.6),
+                          Icons.clear,
+                          color: Colors.white.withOpacity(0.6),
                         ),
                       ),
                       prefixIcon: Icon(
                         Icons.search,
-                        color: Colors.amber,
+                        color: Colors.white,
                       ),
                       hintText: 'Search',
                       hintStyle:
@@ -154,172 +155,127 @@ class _searchbarfunState extends State<searchfunc> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  descriptioncheckui(
+                                                  DescriptionCheckui(
                                                     searchresult[index]
                                                     ['id'],
                                                     searchresult[index]
                                                     ['media_type'],
                                                   )));
                                     },
-                                    child: Container(
-                                        margin: EdgeInsets.only(
-                                            top: 4, bottom: 4),
-                                        height: 180,
-                                        width: MediaQuery.of(context)
-                                            .size
-                                            .width,
-                                        decoration: BoxDecoration(
-                                            color: Color.fromRGBO(
-                                                20, 20, 20, 1),
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10))),
-                                        child: Row(children: [
-                                          Container(
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width *
-                                                0.4,
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                BorderRadius.all(
-                                                    Radius.circular(
-                                                        10)),
-                                                image: DecorationImage(
-                                                  //color filter
-
-                                                    image: NetworkImage(
-                                                        'https://image.tmdb.org/t/p/w500${searchresult[index]['poster_path']}'),
-                                                    fit: BoxFit.fill)),
-                                          ),
-                                          SizedBox(
-                                            width: 20,
-                                          ),
-                                          Padding(
-                                              padding:
-                                              const EdgeInsets.all(8.0),
-                                              child: Container(
-                                                  child: Column(
-                                                      mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                      children: [
-                                                        Container(
-                                                          child: Row(
-                                                            children: [
-                                                              //vote average box
-                                                              Container(
-                                                                padding:
-                                                                EdgeInsets
-                                                                    .all(5),
-                                                                height: 30,
-                                                                // width:
-                                                                //     100,
-                                                                decoration: BoxDecoration(
-                                                                    color: Colors
-                                                                        .amber
-                                                                        .withOpacity(
-                                                                        0.2),
-                                                                    borderRadius:
-                                                                    BorderRadius.all(
-                                                                        Radius.circular(6))),
-                                                                child: Center(
-                                                                  child: Row(
-                                                                    mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .center,
-                                                                    children: [
-                                                                      Icon(
-                                                                        Icons
-                                                                            .star,
-                                                                        color: Colors
-                                                                            .amber,
-                                                                        size:
-                                                                        20,
-                                                                      ),
-                                                                      SizedBox(
-                                                                        width:
-                                                                        5,
-                                                                      ),
-                                                                      Text(
-                                                                          '${searchresult[index]['vote_average']}')
-                                                                    ],
+                                  child: Container(
+                                    margin: EdgeInsets.only(top: 4, bottom: 4),
+                                    height: 200,
+                                    width: MediaQuery.of(context).size.width,
+                                    decoration: BoxDecoration(
+                                        color: Color.fromRGBO(20, 20, 20, 1),
+                                        borderRadius: BorderRadius.all(Radius.circular(10))
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          width: MediaQuery.of(context).size.width * 0.4,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                              BorderRadius.all(Radius.circular(10)),
+                                              image: DecorationImage(
+                                                  image: NetworkImage(
+                                                      'https://image.tmdb.org/t/p/w500${searchresult[index]['poster_path']}'),
+                                                  fit: BoxFit.fill)),
+                                        ),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        Padding(
+                                            padding:
+                                            const EdgeInsets.all(8.0),
+                                            child: Container(
+                                                child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                    children: [
+                                                      Container(
+                                                        child: Column(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                                          children: [
+                                                            Container(
+                                                              width: 100 ,
+                                                              child: Column(
+                                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                                children: [
+                                                                  Text(
+                                                                      '${searchresult[index]['title']}'),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                            SizedBox(height: 50),
+                                                            Row(
+                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                              mainAxisAlignment:  MainAxisAlignment.spaceEvenly,
+                                                              children: [
+                                                                Container(
+                                                                  padding:
+                                                                  EdgeInsets.all(5),
+                                                                  height: 30,
+                                                                  decoration: BoxDecoration(
+                                                                      color: Colors.amber.withOpacity(0.2),
+                                                                      borderRadius: BorderRadius.all(Radius.circular(6))),
+                                                                  child: Center(
+                                                                    child: Row(
+                                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                                      children: [
+                                                                        Icon(
+                                                                          Icons.star,
+                                                                          color: Colors.amber, size: 20,
+                                                                        ),
+                                                                        SizedBox(width: 5,),
+                                                                        Text(
+                                                                            '${searchresult[index]['vote_average'].toStringAsFixed(1)}/10')
+                                                                      ],
+                                                                    ),
                                                                   ),
                                                                 ),
-                                                              ),
-                                                              SizedBox(
-                                                                width: 10,
-                                                              ),
+                                                                SizedBox(width: 10,),
+                                                                Container(
+                                                                  padding:
+                                                                  EdgeInsets.all(5),
+                                                                  height: 30,
+                                                                  decoration: BoxDecoration(
+                                                                      color: Colors.amber.withOpacity(0.2),
+                                                                      borderRadius: BorderRadius.all(Radius.circular(8))),
 
-                                                              //popularity
-                                                              Container(
-                                                                padding:
-                                                                EdgeInsets
-                                                                    .all(5),
-                                                                height: 30,
-                                                                decoration: BoxDecoration(
-                                                                    color: Colors
-                                                                        .amber
-                                                                        .withOpacity(
-                                                                        0.2),
-                                                                    borderRadius:
-                                                                    BorderRadius.all(
-                                                                        Radius.circular(8))),
-                                                                child: Center(
                                                                   child: Row(
-                                                                    mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .center,
+                                                                    mainAxisAlignment: MainAxisAlignment.start,
                                                                     children: [
                                                                       Icon(
-                                                                        Icons
-                                                                            .people_outline_sharp,
-                                                                        color: Colors
-                                                                            .amber,
-                                                                        size:
-                                                                        20,
+                                                                        Icons.people_outline_sharp,
+                                                                        color: Colors.amber, size: 20,
                                                                       ),
-                                                                      SizedBox(
-                                                                        width:
-                                                                        5,
-                                                                      ),
+                                                                      SizedBox(width: 5,),
                                                                       Text(
-                                                                          '${searchresult[index]['popularity']}')
+                                                                          '${searchresult[index]['popularity'].toStringAsFixed(0)}')
                                                                     ],
                                                                   ),
-                                                                ),
-                                                              ),
 
-                                                              //
-                                                            ],
-                                                          ),
+                                                                ),
+                                                              ],
+                                                            ),
+
+                                                          ],
                                                         ),
+                                                      ),
 
-
-                                                        // Container(
-                                                        //     width: MediaQuery.of(
-                                                        //         context)
-                                                        //         .size
-                                                        //         .width *
-                                                        //         0.4,
-                                                        //     height: 85,
-                                                        //     child: Text(
-                                                        //         textAlign:
-                                                        //         TextAlign
-                                                        //             .left,
-                                                        //         ' ${searchresult[index]['overview']}',
-                                                        //         // ' dsfsafsdffdsfsdf sdfsadfsdf sadfsafd',
-                                                        //         style: TextStyle(
-                                                        //             fontSize:
-                                                        //             12,
-                                                        //             color: Colors
-                                                        //                 .white))),
-                                                      ])))
-                                        ])));
+                                                    ]
+                                                )
+                                            )
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                );
                               }));
                     } else {
                       return Center(
                           child: CircularProgressIndicator(
-                            color: Colors.amber,
+                            color: Colors.green,
                           ));
                     }
                   })

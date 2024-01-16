@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
 
-class descriptioncheckui extends StatefulWidget {
-  var newid;
-  var newtype;
-  descriptioncheckui(this.newid, this.newtype);
+class DescriptionCheckui extends StatefulWidget {
+  var newId;
+  var newType;
+  DescriptionCheckui(this.newId, this.newType);
 
   @override
-  State<descriptioncheckui> createState() => _descriptioncheckuiState();
+  State<DescriptionCheckui> createState() => _descriptioncheckuiState();
 }
 
-class _descriptioncheckuiState extends State<descriptioncheckui> {
+class _descriptioncheckuiState extends State<DescriptionCheckui> {
   checktype() {
-    if (widget.newtype.toString() == 'movie') {
+    if (widget.newType.toString() == 'movie') {
       return SizedBox();
     }
   }

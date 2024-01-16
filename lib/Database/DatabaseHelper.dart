@@ -21,7 +21,6 @@ class DatabaseHelper {
   Future<Database> initDb() async {
     String databasesPath = await getDatabasesPath();
     String path = join(databasesPath, 'movies_database.db');
-    print(databasesPath + 'Lin\n');
     var db = await openDatabase(path, version: 1, onCreate: _onCreate);
     return db;
   }
@@ -45,12 +44,12 @@ class DatabaseHelper {
 
   Future<int> insertMovie(Movie movie) async {
     Database db = await this.db;
-    return await db.insert('Movie', movie.toMap());
+    return await db.insert('Movie', movie.ToMap());
   }
 
   Future<List<Movie>> getMovies() async {
     Database db = await this.db;
-    List<Map<String, dynamic>> result = await db.query('');
+    List<Map<String, dynamic>> result = await db.query('moviey');
     return result.map((map) => Movie.fromJson(map)).toList();
   }
 

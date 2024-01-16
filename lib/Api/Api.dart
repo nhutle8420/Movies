@@ -4,18 +4,20 @@ import 'package:sqflite/sqflite.dart';
 import 'KeyApiURL.dart';
 import '../Models/movie.dart';
 import 'package:http/http.dart' as http;
+
+
 class Apii{
   List<Map<String, dynamic>> movies =[];
   var val;
-  static const _trendingUrl = 'https://api.themoviedb.org/3/trending/movie/day?api_key=${KeyApi.aipKey}';
+  static const _trendingUrl = 'https://api.themoviedb.org/3/trending/movie/day?api_key=${KeyApi.aipKey}&page=2';
   static const _moviesingUrl = 'https://api.themoviedb.org/3/movie/popular?api_key=${KeyApi.aipKey}';
 
 
-  Future<List<Movie>> gettrending() async {
-    final response = await http.get(Uri.parse(_trendingUrl));
+  Future<List<Movie>> getTrending() async {
+    final resPonse = await http.get(Uri.parse(_trendingUrl));
 
-    if (response.statusCode == 200) {
-      List<dynamic> data = json.decode(response.body)['results'];
+    if (resPonse.statusCode == 200) {
+      List<dynamic> data = json.decode(resPonse.body)['results'];
       List<Movie> movies = data.map((json) => Movie.fromJson(json)).toList();
 
       // Save data to SQLite
@@ -31,10 +33,10 @@ class Apii{
   }
 
   Future<List<Movie>> fetchMovies() async {
-    final response = await http.get(Uri.parse(_moviesingUrl));
+    final resPonse = await http.get(Uri.parse(_moviesingUrl));
 
-    if (response.statusCode == 200) {
-      List<dynamic> data = json.decode(response.body)['results'];
+    if (resPonse.statusCode == 200) {
+      List<dynamic> data = json.decode(resPonse.body)['results'];
       List<Movie> movies = data.map((json) => Movie.fromJson(json)).toList();
 
       // Save data to SQLite

@@ -10,11 +10,11 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomeScreen> createState() => HomeScreenState();
 }
 
 
-class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
+class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
   int _currentIndex = 1;
  late Future<List<Movie>> trendingMovies;
  late Future<List<Movie>> listMovies;
@@ -22,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
   @override
   void initState() {
     super.initState();
-    trendingMovies = Apii().gettrending();
+    trendingMovies = Apii().getTrending();
     listMovies = Apii().fetchMovies();
   }
 
@@ -49,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                     }else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                       return ElevatedButton(
                         onPressed: () async {
-                          await Apii().gettrending();
+                          await Apii().getTrending();
                           // Refresh the UI after data is saved
                         },
                         child: Text('Fetch and Save Movies'),
@@ -105,17 +105,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                     color: Colors.red
                 ),
                 ),
-                SizedBox(height: 10),
-
               ],
             ),
           ),
           SliverList(
             delegate: SliverChildListDelegate(
               [
-
                 Container(
-                  height: 700,
+                  height: 2000,
                   width: MediaQuery.of(context).size.width,
                   child: TabBarView(
                     controller: _tabController,
@@ -138,83 +135,146 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                             }else {
                               List<Movie> movies = snapshot.data!;
                               return Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     const Padding(
                                       padding: const EdgeInsets.only(
                                           left: 10, top: 20, bottom: 20),
-                                      child: Text('List Movies',style: TextStyle(color: Mycolor.redd),),),
-                                    Container(
-                                        height: 250,
-                                        child:ListView.builder(
-                                            scrollDirection: Axis.horizontal,
-                                            physics: const BouncingScrollPhysics(),
-                                            itemCount: movies.length,
-                                            itemBuilder: (context, index) {
-                                              return GestureDetector(
-                                                  onTap: () {
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                        builder: (context) => DetailsScreen(
-                                                          movie: movies[index],
-                                                        ),
-                                                      ),
-                                                    );
-                                                  },
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius.circular(15),
-                                                        image: DecorationImage(
-                                                            image: NetworkImage(
-                                                              '${KeyApi.imagePath}${movies[index].poster_path}',
+                                      child: Text('Movies',style: TextStyle(color: Mycolor.white),),),
+                                    Column(
+                                      children: [
+                                        Container(
+                                            height: 500,
+                                            child:ListView.builder(
+                                                itemCount: movies.length,
+                                                scrollDirection: Axis.vertical,
+                                                physics: BouncingScrollPhysics(),
+                                                itemBuilder: (context, index) {
+                                                  return GestureDetector(
+                                                      onTap: () {
+                                                        Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                            builder: (context) => DetailsScreen(
+                                                              movie: movies[index],
                                                             ),
-                                                            fit: BoxFit.cover
-                                                        )
-
-                                                    ),
-                                                    margin: EdgeInsets.only(left: 15),
-                                                    width: 170,
-                                                    child: Row(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      mainAxisAlignment:  MainAxisAlignment.spaceBetween,
-                                                      children: [
-                                                        Padding(
-                                                          padding: const EdgeInsets.only(top: 5 ,left: 6,),
-                                                          child: Text('${movies[index].release_date}',style:TextStyle (
-                                                              color: Mycolor.green
-                                                          ),),
+                                                          ),
+                                                        );
+                                                      },
+                                                    child: Container(
+                                                      margin: EdgeInsets.only(top: 4, bottom: 4),
+                                                      height: 200,
+                                                      width: MediaQuery.of(context).size.width,
+                                                        decoration: BoxDecoration(
+                                                          color: Color.fromRGBO(20, 20, 20, 1),
+                                                            borderRadius: BorderRadius.all(Radius.circular(10))
                                                         ),
-                                                        Padding (
-                                                            padding: const EdgeInsets.only(top: 2 ,right: 6),
-                                                            child: Container(
-                                                              decoration: BoxDecoration(
-                                                                  color: Mycolor.scaffoldBgColor.withOpacity(0.5)
-                                                              ),
-                                                              child: Padding(
-                                                                padding: const EdgeInsets.only(
-                                                                    top: 2,
-                                                                    bottom: 2,
-                                                                    left: 5,
-                                                                    right: 5),
-                                                                child: Row(
-                                                                  children: [
-                                                                    const Icon(
-                                                                      Icons.star,
-                                                                      color: Mycolor.yew,
-                                                                    ),
-                                                                    Text('${movies[index].vote_average}'),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                            )
+                                                      child: Row(
+                                                        children: [
+                                                          Container(
+                                                            width: MediaQuery.of(context).size.width * 0.4,
+                                                            decoration: BoxDecoration(
+                                                                borderRadius:
+                                                                BorderRadius.all(Radius.circular(10)),
+                                                                image: DecorationImage(
+                                                                    image: NetworkImage(
+                                                                        'https://image.tmdb.org/t/p/w500${movies[index].poster_path}'),
+                                                                    fit: BoxFit.fill)),
+                                                          ),
+                                                          SizedBox(
+                                                            width: 20,
+                                                          ),
+                                                          Padding(
+                                                              padding:
+                                                              const EdgeInsets.all(8.0),
+                                                              child: Container(
+                                                                  child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                                      children: [
+                                                                        Container(
+                                                                          child: Column(
+                                                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                                                            children: [
+                                                                              Container(
+                                                                                width: 180 ,
+                                                                                  child: Column(
+                                                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                                                    children: [
+                                                                                      Text(
+                                                                                          '${movies[index].title}'),
+                                                                                    ],
+                                                                                  ),
+                                                                                ),
+                                                                              SizedBox(height: 50),
+                                                                              Row(
+                                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                mainAxisAlignment:  MainAxisAlignment.spaceEvenly,
+                                                                                children: [
+                                                                                  Container(
+                                                                                    padding:
+                                                                                    EdgeInsets.all(5),
+                                                                                    height: 30,
+                                                                                    decoration: BoxDecoration(
+                                                                                        color: Colors.amber.withOpacity(0.2),
+                                                                                        borderRadius: BorderRadius.all(Radius.circular(6))),
+                                                                                    child: Center(
+                                                                                      child: Row(
+                                                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                                                        children: [
+                                                                                          Icon(
+                                                                                            Icons.star,
+                                                                                            color: Colors.amber, size: 20,
+                                                                                          ),
+                                                                                          SizedBox(width: 5,),
+                                                                                          Text(
+                                                                                              '${movies[index].vote_average.toStringAsFixed(1)}/10')
+                                                                                        ],
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                  SizedBox(width: 10,),
+                                                                                  Container(
+                                                                                    padding:
+                                                                                    EdgeInsets.all(5),
+                                                                                    height: 30,
+                                                                                    decoration: BoxDecoration(
+                                                                                        color: Colors.amber.withOpacity(0.2),
+                                                                                        borderRadius: BorderRadius.all(Radius.circular(8))),
 
-                                                        )
-                                                      ],
+                                                                                    child: Row(
+                                                                                      mainAxisAlignment: MainAxisAlignment.start,
+                                                                                      children: [
+                                                                                        Icon(
+                                                                                          Icons.people_outline_sharp,
+                                                                                          color: Colors.amber, size: 20,
+                                                                                        ),
+                                                                                        SizedBox(width: 5,),
+                                                                                        Text(
+                                                                                            '${movies[index].popularity.toStringAsFixed(0)}')
+                                                                                      ],
+                                                                                    ),
+
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+
+                                                                            ],
+                                                                          ),
+                                                                        ),
+
+                                                                      ]
+                                                                  )
+                                                              )
+                                                          )
+                                                        ],
+                                                      ),
                                                     ),
-                                                  ));
-                                            }
-                                        )
+                                                  );
+                                                }
+                                            )
+                                        ),
+                                      ],
                                     ),
                                   ]);
 
