@@ -12,7 +12,6 @@ class Apii{
   static const _trendingUrl = 'https://api.themoviedb.org/3/trending/movie/day?api_key=${KeyApi.aipKey}&page=2';
   static const _moviesingUrl = 'https://api.themoviedb.org/3/movie/popular?api_key=${KeyApi.aipKey}';
 
-
   Future<List<Movie>> getTrending() async {
     final resPonse = await http.get(Uri.parse(_trendingUrl));
 

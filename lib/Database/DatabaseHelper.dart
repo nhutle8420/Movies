@@ -21,6 +21,7 @@ class DatabaseHelper {
   Future<Database> initDb() async {
     String databasesPath = await getDatabasesPath();
     String path = join(databasesPath, 'movies_database.db');
+    print('-------'+path+'------');
     var db = await openDatabase(path, version: 1, onCreate: _onCreate);
     return db;
   }
@@ -49,7 +50,7 @@ class DatabaseHelper {
 
   Future<List<Movie>> getMovies() async {
     Database db = await this.db;
-    List<Map<String, dynamic>> result = await db.query('moviey');
+    List<Map<String, dynamic>> result = await db.query('movie');
     return result.map((map) => Movie.fromJson(map)).toList();
   }
 

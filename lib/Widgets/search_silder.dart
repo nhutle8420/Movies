@@ -7,6 +7,7 @@ import 'package:movie_app/Api/KeyApiURL.dart';
 import 'dart:convert';
 
 import 'package:movie_app/Widgets/description_Checkui.dart';
+import 'package:movie_app/Widgets/detail_slider.dart';
 
 class Searchfunc extends StatefulWidget {
   const Searchfunc({super.key});
@@ -20,17 +21,19 @@ class _searchbarfunState extends State<Searchfunc> {
   List<Map<String, dynamic>> searchresult = [];
 
   Future<void> searchlistfunction(val) async {
-    var searchurl =
+    var searchUrl =
         'https://api.themoviedb.org/3/search/multi?api_key=${KeyApi.aipKey}&query=$val';
-    var searchresponse = await http.get(Uri.parse(searchurl));
+    var searchresponse = await http.get(Uri.parse(searchUrl));
     if (searchresponse.statusCode == 200) {
       var tempdata = jsonDecode(searchresponse.body);
       var searchjson = tempdata['results'];
       for (var i = 0; i < searchjson.length; i++) {
-        //only add value if all are present
+       // only add value if all are present
         if (searchjson[i]['id'] != null &&
             searchjson[i]['poster_path'] != null &&
-            searchjson[i]['vote_average'] != null ) {
+            searchjson[i]['vote_average'] != null && searchjson[i]['title'] != null
+             )
+    {
           searchresult.add({
             'id': searchjson[i]['id'],
             'poster_path': searchjson[i]['poster_path'],
@@ -62,7 +65,7 @@ class _searchbarfunState extends State<Searchfunc> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // print("tapped");
+
         FocusManager.instance.primaryFocus?.unfocus();
         showlist = !showlist;
       },
@@ -143,7 +146,7 @@ class _searchbarfunState extends State<Searchfunc> {
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
                       return Container(
-                          height: 400,
+                          height: 379,
                           child: ListView.builder(
                               itemCount: searchresult.length,
                               scrollDirection: Axis.vertical,
@@ -159,7 +162,7 @@ class _searchbarfunState extends State<Searchfunc> {
                                                     searchresult[index]
                                                     ['id'],
                                                     searchresult[index]
-                                                    ['media_type'],
+                                                    ['poster_path'],
                                                   )));
                                     },
                                   child: Container(
@@ -197,7 +200,7 @@ class _searchbarfunState extends State<Searchfunc> {
                                                           crossAxisAlignment: CrossAxisAlignment.center,
                                                           children: [
                                                             Container(
-                                                              width: 100 ,
+                                                              width: 160 ,
                                                               child: Column(
                                                                 mainAxisAlignment: MainAxisAlignment.start,
                                                                 children: [

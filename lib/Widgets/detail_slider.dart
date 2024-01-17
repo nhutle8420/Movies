@@ -17,7 +17,7 @@ class DetailsScreen extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           SliverAppBar.large(
-            leading: const BackButton(),
+            //leading: const BackButton(),
             backgroundColor: Mycolor.scaffoldBgColor,
             expandedHeight: 500,
             pinned: true,
@@ -31,7 +31,7 @@ class DetailsScreen extends StatelessWidget {
                 ),
                 child: Image.network(
                   '${KeyApi.imagePath}${movie.poster_path}',
-                  filterQuality: FilterQuality.high,
+                 // filterQuality: FilterQuality.high,
                   fit: BoxFit.fill,
                 ),
               ),
@@ -45,65 +45,32 @@ class DetailsScreen extends StatelessWidget {
               child: Column(
                 // crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
                   const SizedBox(height: 10),
                   Text(
                     movie.title,
                     style: GoogleFonts.roboto(
-                      fontSize: 30,
-                      fontWeight: FontWeight.w400,
+                      fontSize: 40,
+                      fontWeight: FontWeight.w500,
                     ),
                     // textAlign: TextAlign.justify,
                   ),
                   const SizedBox(height: 16),
                   SizedBox(
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
                           child: Row(
                             children: [
                               Text(
-                                'Date: ',
-                                style: GoogleFonts.roboto(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                movie.release_date,
-                                style: GoogleFonts.roboto(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Text("  "),
-                        Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-
-                          child: Row(
-                            children: [
-                             Text(
                                 'Rating: ',
                                 style: GoogleFonts.roboto(
-                                  fontSize: 15,
+                                  fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               Text(
-                                '${movie.vote_average.toStringAsFixed(1)}/10',
+                                '${movie.vote_average.toStringAsFixed(1)}',
                                 style: GoogleFonts.roboto(
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -115,69 +82,35 @@ class DetailsScreen extends StatelessWidget {
                             ],
                           ),
 
-                        )
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    child:  Text("  "),
-                  ),
-                  SizedBox(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
+                        ),
                         Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
                           child: Row(
                             children: [
                               Text(
-                                'Number Vote: ',
+                                'Day: ',
                                 style: GoogleFonts.roboto(
-                                  fontSize: 14,
+                                  fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               Text(
-                                '${movie.vote_count.toStringAsFixed(0)}',
+                                movie.release_date,
                                 style: GoogleFonts.roboto(
-                                  fontSize: 14,
+                                  fontSize: 19,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        Text("  "),
-                        Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
 
-                          child: Row(
-                            children: [
-                              Text(
-                                'popularity: ',
-                                style: GoogleFonts.roboto(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                '${movie.popularity.toStringAsFixed(0)}',
-                                style: GoogleFonts.roboto(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-
-                        )
                       ],
                     ),
                   ),
@@ -197,6 +130,45 @@ class DetailsScreen extends StatelessWidget {
                     ),
                     // textAlign: TextAlign.justify,
                   ),
+                  Text("  "),
+                  Container(
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.favorite,
+                          color: Colors.red,
+                        ),
+                        Text(
+                          ': ${movie.vote_count.toStringAsFixed(0)} ',
+                          style: GoogleFonts.roboto(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Container(
+                    child: Row(
+                      children: [
+                      Icon(
+                          Icons.people_outline_sharp,
+                          color: Colors.blueAccent, size: 30,
+                        ),
+                    SizedBox(width: 5,),
+                        Text(
+                          ': ${movie.popularity.toStringAsFixed(0)}',
+                          style: GoogleFonts.roboto(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ],
+                    ),
+
+                  )
                 ],
 
               ),
