@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:movie_app/Api/Api.dart';
 import 'package:movie_app/Api/KeyApiURL.dart';
 import 'package:movie_app/Color.dart';
+import 'package:movie_app/Database/DatabaseHelper.dart';
 import 'package:movie_app/Models/movie.dart';
 import 'package:movie_app/Widgets/detail_slider.dart';
 
@@ -18,18 +19,22 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
   int _currentIndex = 1;
  late Future<List<Movie>> trendingMovies;
  late Future<List<Movie>> listMovies;
-
   @override
   void initState() {
     super.initState();
-    trendingMovies = Apii().getTrending();
-    listMovies = Apii().fetchMovies();
+
+    trendingMovies = DatabaseHelper.internal().getTreding_movie();
+    listMovies = DatabaseHelper.internal().getMovies();
+    Apii().insertrending();
+    Apii().inserDatabMovies();
   }
 
   @override
   Widget build(BuildContext context) {
+
     TabController _tabController = TabController(length: 1, vsync: this);
     return Scaffold(
+
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
@@ -50,7 +55,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                     }else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                       return ElevatedButton(
                         onPressed: () async {
-                          await Apii().fetchMovies();
+                          await DatabaseHelper.internal().getTreding_movie();
                           // Refresh the UI after data is saved
                         },
                         child: Text('Fetch and Save Movies'),
@@ -108,6 +113,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                                   SizedBox(
                                                     width: 20,
                                                   ),
+
                                                   Padding(
                                                       padding:
                                                       const EdgeInsets.all(8.0),
@@ -234,7 +240,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                             }else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                               return ElevatedButton(
                                 onPressed: () async {
-                                  await Apii().fetchMovies();
+                                  await DatabaseHelper.internal().getMovies();
                                   // Refresh the UI after data is saved
                                 },
                                 child: Text('Fetch and Save Movies'),
@@ -402,3 +408,5 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
 
   }
 }
+
+

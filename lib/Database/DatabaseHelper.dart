@@ -4,6 +4,7 @@ import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper {
   static final DatabaseHelper _instance = DatabaseHelper.internal();
+
   factory DatabaseHelper() => _instance;
 
   static Database? _db;
@@ -20,11 +21,11 @@ class DatabaseHelper {
 
   Future<Database> initDb() async {
     String databasesPath = await getDatabasesPath();
-    String path = join(databasesPath, 'movies_database.db');
-    print('-------'+path+'------');
+    String path = join(databasesPath, 'movies.db');
     var db = await openDatabase(path, version: 1, onCreate: _onCreate);
     return db;
   }
+
   void _onCreate(Database db, int version) async {
     await db.execute('''
       CREATE TABLE Movie (
@@ -41,18 +42,43 @@ class DatabaseHelper {
         
       )
     ''');
+    await db.execute('''
+      CREATE TABLE trendingmovies (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT NOT NULL,
+        original_title TEXT ,
+        overview TEXT ,
+        poster_path TEXT ,
+        release_date TEXT ,
+        vote_average INTEGER,
+        backdrop_path TEXT ,
+        vote_count INTEGER ,
+        popularity INTEGER
+        
+      )
+    ''');
   }
+            Future<int> insertMovie(Movie movie) async {
+              Database db = await this.db;
+              return await db.insert('Movie', movie.ToMap());
+            }
 
-  Future<int> insertMovie(Movie movie) async {
-    Database db = await this.db;
-    return await db.insert('Movie', movie.ToMap());
+            Future<int> insertTrending(Movie movie) async {
+                Database db = await this.db;
+              return await db.insert('trendingmovies', movie.ToMap());
+            }
+
+            Future<List<Movie>> getMovies() async {
+              Database db = await this.db;
+              List<Map<String, dynamic>> result = await db.query('movie');
+              return result.map((map) => Movie.fromJson(map)).toList();
+            }
+
+            Future<List<Movie>> getTreding_movie() async {
+              Database db = await this.db;
+              List<Map<String, dynamic>> result = await db.query('trendingmovies');
+              return result.map((map) => Movie.fromJson(map)).toList();
+            }
+
   }
-
-  Future<List<Movie>> getMovies() async {
-    Database db = await this.db;
-    List<Map<String, dynamic>> result = await db.query('movie');
-    return result.map((map) => Movie.fromJson(map)).toList();
-  }
-
-}
 
