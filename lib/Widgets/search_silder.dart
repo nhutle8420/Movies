@@ -7,7 +7,6 @@ import 'package:movie_app/Api/KeyApiURL.dart';
 import 'dart:convert';
 
 import 'package:movie_app/Widgets/description_Checkui.dart';
-import 'package:movie_app/Widgets/detail_slider.dart';
 
 class Searchfunc extends StatefulWidget {
   const Searchfunc({super.key});
@@ -28,12 +27,12 @@ class _searchbarfunState extends State<Searchfunc> {
       var tempdata = jsonDecode(searchresponse.body);
       var searchjson = tempdata['results'];
       for (var i = 0; i < searchjson.length; i++) {
-       // only add value if all are present
+        // only add value if all are present
         if (searchjson[i]['id'] != null &&
             searchjson[i]['poster_path'] != null &&
             searchjson[i]['vote_average'] != null && searchjson[i]['title'] != null
-             )
-    {
+        )
+        {
           searchresult.add({
             'id': searchjson[i]['id'],
             'poster_path': searchjson[i]['poster_path'],
@@ -46,7 +45,7 @@ class _searchbarfunState extends State<Searchfunc> {
 
           // searchresult = searchresult.toSet().toList();
 
-          if (searchresult.length > 30) {
+          if (searchresult.length > 20) {
 
             searchresult.removeRange(20, searchresult.length);
           }
@@ -71,14 +70,14 @@ class _searchbarfunState extends State<Searchfunc> {
       },
       child: Padding(
           padding:
-          const EdgeInsets.only(left: 10.0, top: 30, bottom: 20, right: 10),
+          const EdgeInsets.only(left: 10.0, top: 10, bottom: 10, right: 10),
           child: Column(
             children: [
               Container(
-                height: 50,
+                height: 2000,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
+                    color: Colors.white.withOpacity(0.3),
                     borderRadius: BorderRadius.all(Radius.circular(10))),
                 child: TextField(
                   autofocus: false,
@@ -109,7 +108,7 @@ class _searchbarfunState extends State<Searchfunc> {
                               gravity: ToastGravity.BOTTOM,
                               timeInSecForIosWeb: 2,
                               backgroundColor: Color.fromRGBO(18, 18, 18, 1),
-                              textColor: Colors.white,
+                              textColor: Colors.green,
                               fontSize: 16.0);
 
                           setState(() {
@@ -128,7 +127,7 @@ class _searchbarfunState extends State<Searchfunc> {
                       ),
                       hintText: 'Search',
                       hintStyle:
-                      TextStyle(color: Colors.white.withOpacity(0.2)),
+                      TextStyle(color: Colors.white.withOpacity(0.5)),
                       border: InputBorder.none),
                 ),
               ),
@@ -137,9 +136,6 @@ class _searchbarfunState extends State<Searchfunc> {
               SizedBox(
                 height: 5,
               ),
-
-              //if textfield has focus and search result is not empty then display search result
-
               searchtext.text.length > 0
                   ? FutureBuilder(
                   future: searchlistfunction(val1),
@@ -153,18 +149,18 @@ class _searchbarfunState extends State<Searchfunc> {
                               physics: BouncingScrollPhysics(),
                               itemBuilder: (context, index) {
                                 return GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  DescriptionCheckui(
-                                                    searchresult[index]
-                                                    ['id'],
-                                                    searchresult[index]
-                                                    ['poster_path'],
-                                                  )));
-                                    },
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                DescriptionCheckui(
+                                                  searchresult[index]
+                                                  ['id'],
+                                                  searchresult[index]
+                                                  ['poster_path'],
+                                                )));
+                                  },
                                   child: Container(
                                     margin: EdgeInsets.only(top: 4, bottom: 4),
                                     height: 200,

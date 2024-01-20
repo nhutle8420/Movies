@@ -1,3 +1,4 @@
+import 'package:movie_app/Api/Api.dart';
 import 'package:movie_app/Models/movie.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -70,12 +71,15 @@ class DatabaseHelper {
 
             Future<List<Movie>> getMovies() async {
               Database db = await this.db;
+
+              Apii().inserDatabMovies();
               List<Map<String, dynamic>> result = await db.query('movie');
               return result.map((map) => Movie.fromJson(map)).toList();
             }
 
             Future<List<Movie>> getTreding_movie() async {
               Database db = await this.db;
+
               List<Map<String, dynamic>> result = await db.query('trendingmovies');
               return result.map((map) => Movie.fromJson(map)).toList();
             }

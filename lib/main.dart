@@ -14,8 +14,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Movie App',
       theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: Mycolor.scaffoldBgColor,
-        useMaterial3: true,
+        scaffoldBackgroundColor: Mycolor.white,
+
       ),
       home: const Home(),
     );
