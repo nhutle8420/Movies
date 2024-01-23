@@ -24,8 +24,8 @@ class HomeScreenState extends State<Movies_slider> with TickerProviderStateMixin
   void initState() {
     super.initState();
 
-    listMovies = DatabaseHelper.internal().getMovies();
-
+    //listMovies = DatabaseHelper.internal().getMovies();
+    listMovies =Apii().inserDatabMovies();
   }
 
   @override

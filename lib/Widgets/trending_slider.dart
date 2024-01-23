@@ -25,9 +25,8 @@ class HomeScreenState extends State<Trending> with TickerProviderStateMixin{
   void initState() {
     super.initState();
 
-    trendingMovies = DatabaseHelper.internal().getTreding_movie();
-    listMovies = DatabaseHelper.internal().getMovies();
-
+   // trendingMovies = DatabaseHelper.internal().getTreding_movie();
+    trendingMovies = Apii().insertrending();
   }
 
   @override
